@@ -7,18 +7,13 @@ import {db} from "../utils/firebase"
 
 
 
-const Table = ({people,getData}) => {
-    
+const Table = ({people,getData}) => {    
 
     const dispatch=useDispatch()
 
-
-
-
     const deleteContact = async(id)=> {
         await deleteDoc(doc(db, "contacts", id));
-        getData()
-       
+        getData()       
     }
 
     const upDateContact = async({id,username,phone,gender} ) => {
@@ -59,9 +54,7 @@ const Table = ({people,getData}) => {
                     <td><FiEdit style={{cursor:"pointer"}} onClick={()=>upDateContact({username,phone,gender,id})}  /></td>
                     </tr>
                     )
-                })}
-                    
-                   
+                })}                   
                 </tbody>
             </table>
         </div>

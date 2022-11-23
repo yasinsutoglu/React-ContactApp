@@ -9,10 +9,9 @@ import {ToastContainer} from "react-toastify"
 import {db} from "./utils/firebase"
 
 let arr =[]
+
 function App() {
   const [people,setPeople]=useState([]);
-  
-
 
 useEffect(()=> {
 getData()
@@ -27,17 +26,12 @@ setPeople(arr)
 arr=[]
 }
 
-
-
   return (
-
-    <div style={{height:"100vh"}} className="d-flex justify-content-evenly align-items-center border border-2 app"  >
-      
+    <div style={{height:"100vh"}} className="d-flex justify-content-evenly align-items-center border border-2 app" > 
       <Provider store={store}>
       <ToastContainer/>
       <Form getData={getData}  />
       <Table people={people} getData={getData}  />
-
       </Provider>
     </div>
   );

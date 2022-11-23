@@ -8,7 +8,6 @@ import { useState } from "react";
 import { changeFlag } from "../redux/editAction";
 
 const Form = ({getData})=> {
-   
 
     const [kullanici, setKullanici] = useState({
         username:"",
@@ -25,10 +24,7 @@ const Form = ({getData})=> {
     const dispatch=useDispatch()
 
    const {person,flag} =useSelector((state)=>state.edit)
-console.log(person,flag);
-    
-
-    
+   console.log(person,flag);
 
     const addData =  async()=> {
        await addDoc(collection(db, "contacts"), {
@@ -37,11 +33,8 @@ console.log(person,flag);
        gender:kullanici.gender
        });
 
-       toastSuccessNotify("Item added successfully")
-
-       
+    toastSuccessNotify("Item added successfully")     
 }
-
 
     const updateData = async(id) => {
         const personRef = doc(db, "contacts", id);
@@ -52,9 +45,7 @@ console.log(person,flag);
         }) 
         setValueFlag({...valueFlag, nameFlag:false, phoneFlag:false, genderFlag:false})
 
-       toastSuccessNotify("Item updated successfully")
-
-       
+       toastSuccessNotify("Item updated successfully")  
     }
 
 
@@ -72,11 +63,6 @@ console.log(person,flag);
             phone:"",
             gender:""
         })
-       
-        
-
-        
-
     }
 
     const getValueName = () => {
@@ -84,8 +70,6 @@ console.log(person,flag);
             setValueFlag({...valueFlag, nameFlag:true})
             setKullanici({...kullanici, username:person.username})
         }
-        
-
         return kullanici.username
     }
 
