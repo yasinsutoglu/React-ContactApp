@@ -11,7 +11,8 @@ import {db} from "./utils/firebase"
 let arr =[]
 
 function App() {
-  const [people,setPeople]=useState([]);
+
+const [people,setPeople]=useState([]);
 
 useEffect(()=> {
 getData()
@@ -27,7 +28,7 @@ arr=[]
 }
 
   return (
-    <div style={{height:"100vh"}} className="d-flex justify-content-evenly align-items-center border border-2 app" > 
+    <div style={{minHeight:"100vh"}} className="border border-2 app" > 
       <Provider store={store}>
       <ToastContainer/>
       <Form getData={getData}  />

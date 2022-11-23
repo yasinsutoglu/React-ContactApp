@@ -5,7 +5,7 @@ import {db} from "../utils/firebase"
  import {useDispatch, useSelector} from "react-redux"
 import   {toastSuccessNotify} from "../utils/customToastify"
 import { useState } from "react";
-import { changeFlag } from "../redux/editAction";
+import { changeFlag, fill } from "../redux/editAction";
 
 const Form = ({getData})=> {
 
@@ -23,7 +23,7 @@ const Form = ({getData})=> {
 
     const dispatch=useDispatch()
 
-   const {person,flag} =useSelector((state)=>state.edit)
+   const {person,flag} =useSelector((state)=>state?.edit)
    console.log(person,flag);
 
     const addData =  async()=> {
@@ -32,11 +32,12 @@ const Form = ({getData})=> {
        phone:kullanici.phone,
        gender:kullanici.gender
        });
-
+    getData();
     toastSuccessNotify("Item added successfully")     
 }
 
     const updateData = async(id) => {
+
         const personRef = doc(db, "contacts", id);
         await updateDoc(personRef, {
             username:kullanici.username,
@@ -44,6 +45,8 @@ const Form = ({getData})=> {
             gender:kullanici.gender,
         }) 
         setValueFlag({...valueFlag, nameFlag:false, phoneFlag:false, genderFlag:false})
+        dispatch(fill({username:"",phone:"",gender:"", id:null, flag:false})) 
+        getData();
 
        toastSuccessNotify("Item updated successfully")  
     }
@@ -51,7 +54,6 @@ const Form = ({getData})=> {
 
     const handleSubmit = (e)=> {
         e.preventDefault()
-        getData()
         if(person.id) {
             updateData(person.id)
             dispatch(changeFlag())
@@ -62,7 +64,7 @@ const Form = ({getData})=> {
             username:"",
             phone:"",
             gender:""
-        })
+        })       
     }
 
     const getValueName = () => {
@@ -80,6 +82,7 @@ const Form = ({getData})=> {
         }
          return kullanici.phone
     }
+
     const getValueGender = () => {
         if(flag && !valueFlag.genderFlag){
             setValueFlag({...valueFlag, genderFlag:true})
@@ -95,8 +98,7 @@ const Form = ({getData})=> {
             <h2 className="text-center" style={{backgroundColor:"white", padding:"0.75rem", borderRadius:"5px", marginBottom:"1rem"}}>ADD CONTACT</h2>
         </div>
         <form onSubmit={handleSubmit} style={{backgroundColor:"white", padding:"1.5rem", borderRadius:"5px", margin:"1.5rem 0", width:"100%" }}>
-            <div className="mb-3">
-
+            <div>
                 <FaUserTie style={{position:"relative",top:"30px",left:"10px"}} />
                 <input
                 type="text"
@@ -106,10 +108,9 @@ const Form = ({getData})=> {
                 value={getValueName()}
                 aria-describedby="nameHelp"
                 onChange={(e)=> setKullanici({...kullanici, username:e.target.value})}
-                />
-                
+                />                
             </div>
-            <div className="mb-3">
+            <div className="mb-4">
                  <AiFillPhone style={{position:"relative",top:"30px",left:"10px"}} />
                 <input
                 type="number"
@@ -118,7 +119,6 @@ const Form = ({getData})=> {
                 value={getValuePhone()}
                 id="phone"
                 onChange={(e)=> setKullanici({...kullanici, phone:e.target.value})}
-
                 />
             </div>
                

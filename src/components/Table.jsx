@@ -4,7 +4,7 @@ import { doc, deleteDoc} from "firebase/firestore";
 import {db} from "../utils/firebase"
  import {useDispatch} from "react-redux"
  import { fill } from "../redux/editAction";
-
+import { toastErrorNotify } from "../utils/customToastify";
 
 
 const Table = ({people,getData}) => {    
@@ -13,15 +13,13 @@ const Table = ({people,getData}) => {
 
     const deleteContact = async(id)=> {
         await deleteDoc(doc(db, "contacts", id));
-        getData()       
+        getData()    
+        toastErrorNotify("Item deleted")   
     }
 
-    const upDateContact = async({id,username,phone,gender} ) => {
-        
+    const upDateContact = async({id,username,phone,gender} ) => {        
     //   setValueFlag({...valueFlag,  nameFlag:false, phoneFlag:false, genderFlag:false })
-
-        dispatch(fill({username:username,phone:phone,gender:gender, id:id}))    
-        
+        dispatch(fill({username:username,phone:phone,gender:gender, id:id, flag:true}))        
         getData()
     }
 
@@ -29,9 +27,9 @@ const Table = ({people,getData}) => {
   return (
     <div className="tableDiv">
         <div>
-            <h2 className="text-center" style={{backgroundColor:"white", padding:"0.75rem", borderRadius:"5px", marginBottom:"1rem"}}> CONTACT</h2>
+            <h2 className="text-center d-none d-sm-block" style={{backgroundColor:"white", padding:"0.75rem", borderRadius:"5px", marginBottom:"1rem"}}> CONTACT</h2>
         </div>
-        <div className="d-sm-flex justify-content-sm-start ">
+        <div className="d-flex justify-content-start altTable">
             <table className="table table-success table-striped">
                 <thead>
                     <tr>
