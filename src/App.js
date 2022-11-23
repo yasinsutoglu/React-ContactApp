@@ -5,7 +5,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { Provider } from "react-redux";
 import {store} from "./redux"
 import {ToastContainer} from "react-toastify"
-
 import {db} from "./utils/firebase"
 
 let arr =[]
@@ -19,9 +18,7 @@ getData()
 },[])
   
 const getData = async()=> {
-
 const querySnapshot = await getDocs(collection(db, "contacts"));
-
 querySnapshot.docs.forEach((doc) => (arr.push({id:doc.id, data:doc.data() })))
 setPeople(arr)
 arr=[]
@@ -35,10 +32,7 @@ arr=[]
       <Table people={people} getData={getData}  />
       </Provider>
     </div>
-  );
-
-
-  
+  );  
 }
 
 export default App;
